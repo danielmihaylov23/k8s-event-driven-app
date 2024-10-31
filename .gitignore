@@ -1,2 +1,2 @@
 .terraform/.terraform/
-service_account_key/
+service_account_key/.terraform/
