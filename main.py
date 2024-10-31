@@ -3,13 +3,14 @@ import json
 from google.cloud import pubsub_v1, storage
 
 # Initialize Pub/Sub and Storage clients
+# No need to specify credentials, Workload Identity will handle it
 subscriber = pubsub_v1.SubscriberClient()
 storage_client = storage.Client()
 
 # Configuration from environment variables
-PROJECT_ID = os.getenv("PROJECT_ID")
-SUBSCRIPTION_ID = os.getenv("SUBSCRIPTION_ID")
-BUCKET_NAME = os.getenv("BUCKET_NAME")
+PROJECT_ID = "gcp-k8s-event-driven-app"
+SUBSCRIPTION_ID = "my-subscription"
+BUCKET_NAME = "b234cke5678t"
 
 # Function to process incoming events
 def process_event(message):
@@ -45,4 +46,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 

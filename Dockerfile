@@ -13,9 +13,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the entire project directory into the container
 COPY . .
 
-# Set environment variables for Google Cloud credentials
-ENV GOOGLE_APPLICATION_CREDENTIALS="/service_account_key/gcp-k8s-event-driven-app-d3062b1ba159.json"
-
 # Expose port if your app listens on a specific port (optional, e.g., 8080)
 EXPOSE 8080
 
