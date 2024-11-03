@@ -12,23 +12,24 @@ spec:
       labels:
         app: event-driven-app
     spec:
-      serviceAccountName: kubernetes-sa
       containers:
-        - name: event-driven-app
-          image: gcr.io/gcp-k8s-event-driven-app/event-driven-app:latest
-          env:
-            - name: PROJECT_ID
-              value: "gcp-k8s-event-driven-app"
-            - name: SUBSCRIPTION_ID
-              value: "my-subscription"
-            - name: BUCKET_NAME
-              value: "b234cke5678t"
-            - name: GOOGLE_APPLICATION_CREDENTIALS
-              value: /etc/service-account-key/gcp-k8s-event-driven-app-092926fb4459.json  # Path to your service account key
-          volumeMounts:
-            - name: service-account-key
-              mountPath: /etc/service-account-key  # This is where the key will be accessible in the container
+      - name: event-driven-app
+        image: gcr.io/gcp-k8s-event-driven-app/event-driven-app:latest
+        env:
+        - name: PROJECT_ID
+          value: "gcp-k8s-event-driven-app"  # Your GCP project ID
+        - name: SUBSCRIPTION_ID
+          value: "my-subscription"  # Your Pub/Sub subscription ID
+        - name: BUCKET_NAME
+          value: "b234cke5678t"  # Your Cloud Storage bucket name
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: "/secrets/gcp/gcp-k8s-event-driven-app-bd44f4a65fc2.json"  # Updated to match the secret file name
+        volumeMounts:
+        - name: gcp-credentials
+          mountPath: /secrets/gcp  # Mount secret at this path
+          readOnly: true
       volumes:
-        - name: service-account-key
-          secret:
-            secretName: service-account-key  # Reference to the secret you created
+      - name: gcp-credentials
+        secret:
+          secretName: service-account-key  # Name of the secret created in Kubernetes
+
